@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   children: [
                     const SizedBox(
-                      height: 20,
+                      height: 16,
                     ),
                     const Header(),
                     //! current temp

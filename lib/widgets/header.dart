@@ -3,6 +3,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/controller/global_controller.dart';
+import 'package:weather/utils/addbunner_helper.dart';
 
 class Header extends StatefulWidget {
   const Header({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
+  BannerAdHelper bannerAdHelper = BannerAdHelper();
   String city = '';
 
   String dateTime = DateFormat('yMMMMd').format(
@@ -22,11 +24,24 @@ class _HeaderState extends State<Header> {
 
   @override
   void initState() {
+    super.initState();
     getAddres(
       globalController.getLattitude().value,
       globalController.getLongitude().value,
     );
-    super.initState();
+    bannerAdHelper.initializeAdMob(
+      onAdLoaded: (ad) {
+        setState(() {
+          bannerAdHelper.isBannerAd = true;
+        });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    bannerAdHelper.bannerAd.dispose();
+    super.dispose();
   }
 
   getAddres(lat, lon) async {
@@ -41,6 +56,13 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        bannerAdHelper.isBannerAd
+            ? SizedBox(
+                height: bannerAdHelper.bannerAd.size.height.toDouble(),
+                width: bannerAdHelper.bannerAd.size.width.toDouble(),
+                child: bannerAdHelper.buildAdWidget(),
+              )
+            : const SizedBox(),
         Container(
           alignment: Alignment.topLeft,
           margin: const EdgeInsets.only(left: 20, right: 20),
