@@ -17,13 +17,13 @@ class WeatherDataCurrent {
 }
 
 class Current {
-  int? temp;
-  double? uvi;
-  double? feelsLike;
-  int? humidity;
-  int? clouds;
-  double? windSpeed;
-  List<Weather>? weather;
+final  int? temp;
+final  double? uvi;
+final  double? feelsLike;
+final  int? humidity;
+final  int? clouds;
+final  double? windSpeed;
+final  List<Weather>? weather;
   Current({
     this.temp,
     this.uvi,

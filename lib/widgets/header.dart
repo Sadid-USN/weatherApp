@@ -6,7 +6,7 @@ import 'package:weather/controller/global_controller.dart';
 import 'package:weather/utils/addbunner_helper.dart';
 
 class Header extends StatefulWidget {
-  const Header({Key? key}) : super(key: key);
+  const Header({super.key});
 
   @override
   State<Header> createState() => _HeaderState();
@@ -55,6 +55,7 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         bannerAdHelper.isBannerAd
             ? SizedBox(
@@ -63,33 +64,41 @@ class _HeaderState extends State<Header> {
                 child: bannerAdHelper.buildAdWidget(),
               )
             : const SizedBox(),
-        Container(
-          alignment: Alignment.topLeft,
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          child: Text(
-            city,
-            style: const TextStyle(
-              height: 2.0,
-              fontSize: 28.0,
-            ),
+            SizedBox(height: 8,),
+        Text(
+          'MY LOCATION',
+          style: const TextStyle(
+           
+            fontSize: 18.0,
+                color: Colors.white
           ),
         ),
-        Container(
-          alignment: Alignment.topLeft,
-          margin: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: 20,
-          ),
-          child: Text(
-            dateTime,
-            style: TextStyle(
-              height: 1.5,
-              fontSize: 14.0,
-              color: Colors.grey[700],
-            ),
+        Text(
+          city,
+          style: const TextStyle(
+            height: 1.5,
+            fontSize: 28.0,
+            color: Colors.white
           ),
         ),
+        // Container(
+        //   alignment: Alignment.topLeft,
+        //   margin: const EdgeInsets.only(
+        //     left: 20,
+        //     right: 20,
+        //     bottom: 20,
+        //   ),
+        //   child: 
+        // Text(
+        //     dateTime,
+        //     style: TextStyle(
+        //       height: 1.5,
+        //       fontSize: 25.0,
+        //       color: Colors.black45,
+        //       fontWeight: FontWeight.w500
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

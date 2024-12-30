@@ -2,6 +2,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:weather/API/fetch_weather.dart';
 import 'package:weather/model/weather_model/all_weather_data.dart';
+import 'package:weather/utils/utils.dart';
 
 class GlobalController extends GetxController {
   // create various variables
@@ -9,7 +10,15 @@ class GlobalController extends GetxController {
   final RxDouble _lattitude = 0.0.obs;
   final RxDouble _longitude = 0.0.obs;
   final RxInt _currenIndex = 0.obs;
+  //final RxString description = ''.obs;
+  
 
+  updateWeather(String description) {
+   WeatherBackground.getBackgroundImage(description);
+    update(); // Обновляем виджеты GetBuilder
+  }
+
+ 
   // create instance for them to be called
   RxBool checkLoading() => _isLoading;
   RxDouble getLattitude() => _lattitude;
@@ -56,8 +65,8 @@ class GlobalController extends GetxController {
 
     // getting the currentposition
     return await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high)
-        .then((value) {
+      locationSettings: LocationSettings(accuracy: LocationAccuracy.high),
+    ).then((value) {
       //update our latitude and longitude
       _lattitude.value = value.latitude;
       _longitude.value = value.longitude;
@@ -76,4 +85,8 @@ class GlobalController extends GetxController {
   RxInt getIndex() {
     return _currenIndex;
   }
+
+
+   
+
 }

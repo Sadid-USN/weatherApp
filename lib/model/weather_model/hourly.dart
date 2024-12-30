@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'weather.dart';
 
 class WeatherHourlyData {
-  List<Hourly>? hourly;
+ final List<Hourly>? hourly;
 
   WeatherHourlyData({
     required this.hourly,
@@ -19,10 +19,10 @@ class WeatherHourlyData {
 }
 
 class Hourly {
-  int? dt;
-  int? temp;
+ final int? dt;
+ final int? temp;
 
-  List<Weather>? weather;
+ final List<Weather>? weather;
 
   Hourly({
     this.dt,

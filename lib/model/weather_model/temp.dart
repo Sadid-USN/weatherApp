@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class Temp {
-  double? day;
-  int? min;
-  int? max;
-  double? night;
-  double? eve;
-  double? morn;
+final double? day;
+final int? min;
+final int? max;
+final double? night;
+final double? eve;
+final double? morn;
 
   Temp({this.day, this.min, this.max, this.night, this.eve, this.morn});
 

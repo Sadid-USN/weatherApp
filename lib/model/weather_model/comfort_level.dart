@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:weather/model/weather_model/weather_data_current.dart';
 import 'package:weather/utils/custom_colors.dart';
+import 'package:weather/utils/utils.dart';
 
 class ComfortLevel extends StatelessWidget {
   final WeatherDataCurrent current;
-  const ComfortLevel({Key? key, required this.current}) : super(key: key);
+  const ComfortLevel({super.key, required this.current});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,17 +19,21 @@ class ComfortLevel extends StatelessWidget {
             bottom: 10,
           ),
           padding: const EdgeInsets.all(15.0),
-          child: const Text(
+          child: Text(
             'Comfort level',
-            style: TextStyle(fontSize: 18, color: CustomColors.textColorBlack),
+            style: CustomTextStyles.boldFont20,
           ),
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height / 2 * 0.6,
-          child: Column(
-            children: [
-              Center(
-                child: SleekCircularSlider(
+          child: Container(
+            padding: EdgeInsets.only(top: 10),
+            decoration: BoxDecoration(
+                  color: Color(0xff506278).withValues(alpha: 0.6)
+                ),
+            child: Column(
+              children: [
+                SleekCircularSlider(
                   min: 0,
                   max: 100,
                   initialValue: current.current.humidity!.toDouble(),
@@ -42,82 +47,67 @@ class ComfortLevel extends StatelessWidget {
                         bottomLabelText: 'Humidity',
                         bottomLabelStyle: const TextStyle(
                           letterSpacing: 0.1,
-                          fontSize: 14.0,
+                          fontSize: 18.0,
                           height: 1.5,
+                          color: CustomColors.dividerLine,
                         )),
                     animationEnabled: true,
                     size: 180,
                     customColors: CustomSliderColors(
+                       
                         hideShadow: true,
-                        trackColor: Colors.cyan.withAlpha(80),
+                        trackColor: CustomColors.infoBlue,
                         progressBarColors: [
-                          CustomColors.firstGradientColor,
+                          CustomColors.dividerLine,
                           CustomColors.secondGradientColor,
-                        ]),
+                        ],
+                        
+                        ),
+                        
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'Feels like ',
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            height: 0.8,
-                            color: CustomColors.textColorBlack,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' ${current.current.feelsLike}',
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            height: 0.8,
-                            color: CustomColors.textColorBlack,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
+               
+                Container(
+                  decoration: BoxDecoration(
+                    color: CustomColors.darkBackground.withValues(alpha: 0.5)
                   ),
-                  SizedBox(
-                    height: 25,
-                    width: 1,
-                    child: ColoredBox(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'UV Index ',
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            height: 0.8,
-                            color: CustomColors.textColorBlack,
-                            fontWeight: FontWeight.w400,
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                             TextSpan(
+                              text: 'Feels like ',
+                              style: CustomTextStyles.regularFont18,
+                            ),
+                            TextSpan(
+                              text: ' ${current.current.feelsLike}',
+                              style: CustomTextStyles.regularFont18,
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          text: ' ${current.current.uvi}',
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            height: 0.8,
-                            color: CustomColors.textColorBlack,
-                            fontWeight: FontWeight.w400,
-                          ),
+                      ),
+                     
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                             TextSpan(
+                              text: 'UV Index ',
+                              style: CustomTextStyles.regularFont18,
+                            ),
+                            TextSpan(
+                              text: ' ${current.current.uvi}',
+                              style: CustomTextStyles.regularFont18,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              )
-            ],
+                )
+              ],
+            ),
           ),
         )
       ],

@@ -4,26 +4,28 @@ import 'package:intl/intl.dart';
 import 'package:weather/controller/global_controller.dart';
 import 'package:weather/model/weather_model/hourly.dart';
 import 'package:weather/utils/custom_colors.dart';
+import 'package:weather/utils/utils.dart';
+
 
 class HourlyWidgwt extends StatelessWidget {
   final WeatherHourlyData heatherHourlyData;
-  HourlyWidgwt({Key? key, required this.heatherHourlyData}) : super(key: key);
+  HourlyWidgwt({super.key, required this.heatherHourlyData});
 
   // card index
-  RxInt cardIndex = GlobalController().getIndex();
+ final RxInt cardIndex = GlobalController().getIndex();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          child: Text(
-            'Today',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+        Text(
+          'Today',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
           ),
         ),
+        SizedBox(height: 8,),
         listHourly()
       ],
     );
@@ -31,8 +33,14 @@ class HourlyWidgwt extends StatelessWidget {
 
   Widget listHourly() {
     return Container(
-      height: 160.0,
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
+
+      height: 170.0,
+      padding: const EdgeInsets.only(top: 10, bottom: 10, ),
+      margin: const EdgeInsets.only(left: 10, right: 10, ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.0),
+        color: Color(0xff506278).withValues(alpha: 0.6)
+      ),
       child: ListView.builder(
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
@@ -51,19 +59,9 @@ class HourlyWidgwt extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.0),
                     boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.5, 0),
-                        blurRadius: 30.0,
-                        spreadRadius: 1,
-                        color: CustomColors.dividerLine.withAlpha(150),
-                      )
+                   
                     ],
-                    gradient: cardIndex.value == index
-                        ? const LinearGradient(colors: [
-                            CustomColors.firstGradientColor,
-                            CustomColors.secondGradientColor,
-                          ])
-                        : null,
+                   
                   ),
                   child: HourlyDetails(
                     index: index,
@@ -82,26 +80,22 @@ class HourlyWidgwt extends StatelessWidget {
 }
 
 class HourlyDetails extends StatelessWidget {
-  int temp;
-  int index;
-  int cardIndex;
-  int timeStamp;
-  String weatherIcon;
+final  int temp;
+final  int index;
+final  int cardIndex;
+final  int timeStamp;
+final  String weatherIcon;
 
-  String getTime(final timeStamp) {
-    DateTime time = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
-    String x = DateFormat('jm').format(time);
-    return x;
-  }
 
-  HourlyDetails({
-    Key? key,
+
+ const HourlyDetails({
+    super.key,
     required this.timeStamp,
     required this.index,
     required this.cardIndex,
     required this.temp,
     required this.weatherIcon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -109,33 +103,37 @@ class HourlyDetails extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Container(
-          margin: const EdgeInsets.all(10),
-          child: Text(
-            getTime(timeStamp),
-            style: TextStyle(
-                color: cardIndex == index
-                    ? Colors.white
-                    : CustomColors.textColorBlack),
+          margin: const EdgeInsets.all(4),
+          child: Row(
+           
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min, // Минимизируем ширину контейнера
+            children: [
+               Text(
+                DateFormatters.getTime(timeStamp), // Используем метод getTime
+                style: CustomTextStyles.boldFont20,
+              ),
+              Text(
+                DateFormatters.getPeriod(timeStamp), // Используем метод getPeriod
+                style: CustomTextStyles.boldFont14, // Используем стиль меньшего размера
+              ),
+            ],
           ),
         ),
-        Container(
-          margin: const EdgeInsets.only(top: 5.0),
-          child: Image.asset(
-            'assets/weather/$weatherIcon.png',
-            height: 40,
-            width: 40,
-          ),
+        Image.asset(
+          color: CustomColors.dividerLine,
+          'assets/icons/clouds.png',
+          height: cardIndex == index ?  40 : 35,
+         
         ),
         Container(
           margin: const EdgeInsets.only(bottom: 10.0),
           child: Text(
             "$temp°",
-            style: TextStyle(
-                fontSize: 14.0,
-                color: cardIndex == index
-                    ? Colors.white
-                    : CustomColors.textColorBlack),
-          ),
+            style: CustomTextStyles.boldFont18,
+            
+            
+          )
         ),
       ],
     );

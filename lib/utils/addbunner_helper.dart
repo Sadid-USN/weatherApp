@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+     
 class BannerAdHelper {
   static final BannerAdHelper _instance = BannerAdHelper._internal();
   late BannerAd bannerAd;
-  final String adUnitIdAndroid = "ca-app-pub-7613540986721565/4561972287";
-  final String adUnitIdIOS = "ca-app-pub-7613540986721565/3747368467";
+  final String adUnitIdAndroid = "ca-app-pub-9865552746702280/8416701200";
+  final String adUnitIdIOS = "ca-app-pub-9865552746702280/8314691054";
   bool isBannerAd = false;
 
   factory BannerAdHelper() {
@@ -27,7 +28,7 @@ class BannerAdHelper {
         onAdLoaded: onAdLoaded,
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          print(error);
+       
         },
       ),
       request: const AdRequest(),

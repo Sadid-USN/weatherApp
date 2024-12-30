@@ -4,140 +4,159 @@ import 'package:weather/utils/custom_colors.dart';
 
 class CurrentWeatherWidget extends StatelessWidget {
   final WeatherDataCurrent getWeatherDataCurrent;
-  const CurrentWeatherWidget({Key? key, required this.getWeatherDataCurrent})
-      : super(key: key);
+  const CurrentWeatherWidget({super.key, required this.getWeatherDataCurrent});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         // tempeture area
-        tempetureAreaWidget(),
-        const SizedBox(
-          height: 20,
+
+        TempetureAreaWidget(
+          weatherIcon: getWeatherDataCurrent.current.weather![0].icon ?? '',
+          temperature: getWeatherDataCurrent.current.temp!.toInt(),
+          weatherDescription:
+              getWeatherDataCurrent.current.weather![0].description ?? "",
         ),
-        weatherDetailsWidget(),
+        const SizedBox(height: 10),
+        WeatherDetailsWidget(
+          windSpeed: getWeatherDataCurrent.current.windSpeed ?? 0,
+          clouds: getWeatherDataCurrent.current.clouds ?? 0,
+          humidity: getWeatherDataCurrent.current.humidity ?? 0,
+        ),
       ],
     );
   }
+}
 
-  Widget tempetureAreaWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+class TempetureAreaWidget extends StatelessWidget {
+  final String weatherIcon; // Иконка погоды
+  final int temperature; // Температура
+  final String weatherDescription; // Описание погоды
+
+  const TempetureAreaWidget({
+    super.key,
+    required this.weatherIcon,
+    required this.temperature,
+    required this.weatherDescription,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String formatTemperature(int temperature) {
+      switch (temperature.sign) {
+        case 1: // Положительное значение
+          return "$temperature°";
+        case -1: // Отрицательное значение
+          return "-$temperature°";
+        case 0: // Ноль
+          return "$temperature°";
+        default:
+          return "$temperature°";
+      }
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          'assets/weather/${getWeatherDataCurrent.current.weather![0].icon}.png',
-          height: 80,
-          width: 80,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/weather/$weatherIcon.png',
+              height: 45,
+              width: 45,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 8.0,
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: formatTemperature(temperature),
+                    style: TextStyle(
+                      color: CustomColors.whiteColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 60,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        const SizedBox(
-          height: 50,
-          width: 1,
-          child: ColoredBox(
-            color: CustomColors.dividerLine,
+        SizedBox(
+          height: 4.0,
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4), color: Colors.black26),
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: weatherDescription,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        RichText(
-          text: TextSpan(children: [
-            TextSpan(
-              text: "${getWeatherDataCurrent.current.temp!.toInt()}°",
-              style: const TextStyle(
-                color: CustomColors.textColorBlack,
-                fontWeight: FontWeight.w600,
-                fontSize: 60,
-              ),
-            ),
-            TextSpan(
-              text: "${getWeatherDataCurrent.current.weather![0].description}",
-              style: const TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-              ),
-            ),
-          ]),
         ),
       ],
     );
   }
+}
 
-  Widget weatherDetailsWidget() {
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            height: 60,
-            width: 60,
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: CustomColors.cardColor,
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: Image.asset('assets/icons/windspeed.png'),
-          ),
-          Container(
-            height: 60,
-            width: 60,
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: CustomColors.cardColor,
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: Image.asset('assets/icons/clouds.png'),
-          ),
-          Container(
-            height: 60,
-            width: 60,
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: CustomColors.cardColor,
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: Image.asset('assets/icons/humidity.png'),
-          ),
-        ],
+class WeatherDetailsWidget extends StatelessWidget {
+  final double windSpeed; // Скорость ветра
+  final int clouds; // Облачность
+  final int humidity; // Влажность
+
+  const WeatherDetailsWidget({
+    super.key,
+    required this.windSpeed,
+    required this.clouds,
+    required this.humidity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildDetailText("${windSpeed}km/h"),
+
+        const SizedBox(height: 10.0),
+
+        _buildDetailIcon('assets/icons/windspeed.png'),
+        // _buildDetailText("${clouds}%"),
+        // _buildDetailText("${humidity}%"),
+      ],
+    );
+  }
+
+  Widget _buildDetailIcon(String assetPath) {
+    return Image.asset(
+      assetPath,
+      height: 30,
+      color: Colors.white,
+    );
+  }
+
+  Widget _buildDetailText(String text) {
+    return SizedBox(
+      height: 20,
+      width: 60,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 16, color: Colors.white),
       ),
-      const SizedBox(
-        height: 10.0,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          SizedBox(
-            height: 20,
-            width: 60,
-            child: Text(
-              "${getWeatherDataCurrent.current.windSpeed}km/h",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 12,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-            width: 60,
-            child: Text(
-              "${getWeatherDataCurrent.current.clouds}%",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 12,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-            width: 60,
-            child: Text(
-              "${getWeatherDataCurrent.current.humidity}%",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 12,
-              ),
-            ),
-          ),
-        ],
-      )
-    ]);
+    );
   }
 }

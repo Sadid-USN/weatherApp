@@ -3,7 +3,7 @@ import 'temp.dart';
 import 'weather.dart';
 
 class WeatherDailyData {
-  List<Daily>? daily;
+ final List<Daily>? daily;
 
   WeatherDailyData({
     required this.daily,

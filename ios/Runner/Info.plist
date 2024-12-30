@@ -25,13 +25,13 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-7613540986721565~4793938392</string>
+	<string>ca-app-pub-9865552746702280~2042864542</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app requests access to your location.</string>
+	<string>This app requests location access for accurate weather forecasts based on your city.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>this app requests access to your location.</string>
+	<string>This app requests location access for accurate weather forecasts based on your city.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>The application does not use this feature</string>
 	<key>SKAdNetworkItems</key>

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:weather/API/api_key.dart';
 import 'package:weather/model/weather_model/all_weather_data.dart';
@@ -14,7 +15,7 @@ class FetchWeatherAPI {
   // Processing the data from response -> to json
 
   Future<AllWeatherData> progressData(lat, lon) async {
-    var response = await http.get(Uri.parse(apiUR('42.882004', '74.582748')));
+    var response = await http.get(Uri.parse(apiUR(lat, lon)));
     var jsonString = jsonDecode(response.body);
     getWeatherDataCurrent = AllWeatherData(
       WeatherDataCurrent.fromJson(jsonString),
@@ -25,7 +26,7 @@ class FetchWeatherAPI {
     return getWeatherDataCurrent!;
   }
 
-  String apiUR(String lat, String lon) {
+  String apiUR(double lat, double lon) {
     String url;
 
     url =
