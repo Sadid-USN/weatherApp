@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:weather/model/weather_model/weather_data_current.dart';
-import 'package:weather/utils/custom_colors.dart';
 import 'package:weather/utils/utils.dart';
 
 class ComfortLevel extends StatelessWidget {

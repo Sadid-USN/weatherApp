@@ -13,6 +13,8 @@ class WeatherBackground {
         return 'assets/images/mist.png';
       case 'rain':
         return 'assets/images/rainWindow.png';
+      case ' light rain':
+        return 'assets/images/lightRain.png';
       case 'broken clouds':
         return 'assets/images/brokenClouds.png';
       case 'scattered clouds':

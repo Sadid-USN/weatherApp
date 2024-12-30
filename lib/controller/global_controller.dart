@@ -1,3 +1,4 @@
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:weather/API/fetch_weather.dart';
@@ -10,6 +11,7 @@ class GlobalController extends GetxController {
   final RxDouble _lattitude = 0.0.obs;
   final RxDouble _longitude = 0.0.obs;
   final RxInt _currenIndex = 0.obs;
+
   //final RxString description = ''.obs;
   
 
@@ -35,6 +37,7 @@ class GlobalController extends GetxController {
   void onInit() {
     if (_isLoading.isTrue) {
       getLocation();
+      
     } else {
       getIndex();
     }
