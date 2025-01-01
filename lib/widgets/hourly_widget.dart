@@ -45,7 +45,7 @@ class HourlyWidgwt extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemCount: heatherHourlyData.hourly!.length > 12
-              ? 18
+              ? 8
               : heatherHourlyData.hourly!.length,
           itemBuilder: (context, index) {
             return Obx(
